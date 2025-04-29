@@ -47,7 +47,7 @@ contract LendingAndBorrowing {
         _;
     }
 
-    function recordDeposit(address user, uint256 amount) external onlySender(user) {
+    function recordDeposit(address user, uint256 amount) external {
         require(amount > 0, "Amount must be > 0");
 
         uint256 oldUserDeposit = userDeposits[user];
@@ -69,7 +69,7 @@ contract LendingAndBorrowing {
         );
     }
 
-    function recordWithdrawal(address user, uint256 amount) external onlySender(user) {
+    function recordWithdrawal(address user, uint256 amount) external {
         require(amount > 0, "Amount must be > 0");
 
         uint256 oldUserDeposit = userDeposits[user];
@@ -93,7 +93,7 @@ contract LendingAndBorrowing {
         );
     }
 
-    function recordBorrow(address user, uint256 amount) external onlySender(user) {
+    function recordBorrow(address user, uint256 amount) external {
         require(amount > 0, "Amount must be > 0");
 
         uint256 deposited = userDeposits[user];
@@ -107,16 +107,10 @@ contract LendingAndBorrowing {
 
         userBorrows[user] = newBorrow;
 
-        emit BorrowEvent(
-            user,
-            amount,
-            oldBorrow,
-            newBorrow,
-            maxBorrow
-        );
+        emit BorrowEvent(user, amount, oldBorrow, newBorrow, maxBorrow);
     }
 
-    function recordRepayment(address user, uint256 amount) external onlySender(user) {
+    function recordRepayment(address user, uint256 amount) external {
         require(amount > 0, "Amount must be > 0");
 
         uint256 borrowed = userBorrows[user];
@@ -129,15 +123,12 @@ contract LendingAndBorrowing {
 
         userBorrows[user] = newBorrow;
 
-        emit RepaymentEvent(
-            user,
-            repayAmount,
-            oldBorrow,
-            newBorrow
-        );
+        emit RepaymentEvent(user, repayAmount, oldBorrow, newBorrow);
     }
 
-    function getUserBalances(address user) external view returns (uint256 deposit, uint256 borrow) {
+    function getUserBalances(
+        address user
+    ) external view returns (uint256 deposit, uint256 borrow) {
         deposit = userDeposits[user];
         borrow = userBorrows[user];
     }
