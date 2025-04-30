@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
  * @title CustomToken
  * @dev ERC20 Token with minting and transfer capabilities controlled by owner
  */
-contract CustomToken is ERC20, Ownable {
+contract KPT is ERC20, Ownable {
     
     event TokensMinted(address indexed to, uint256 amount);
     event TokensTransferredByOwner(address indexed from, address indexed to, uint256 amount);
